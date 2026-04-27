@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#565e74",
+                    "surface-container-low": "#f2f4f6",
+                    "on-surface": "#191c1e",
+                    "outline": "#717786",
+                    "primary-fixed": "#d8e2ff",
+                    "on-background": "#191c1e",
+                    "surface-variant": "#e0e3e5",
+                    "surface-tint": "#005bc1",
+                    "on-secondary-fixed": "#131b2e",
+                    "background": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#bec6e0",
+                    "tertiary": "#9e3d00",
+                    "tertiary-container": "#c64f00",
+                    "on-secondary-container": "#5c647a",
+                    "on-primary-fixed-variant": "#004493",
+                    "on-primary-container": "#fefcff",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container": "#eceef0",
+                    "on-tertiary-container": "#fffbff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-primary-fixed": "#001a41",
+                    "primary-fixed-dim": "#adc6ff",
+                    "primary-container": "#0070eb",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed": "#351000",
+                    "surface-dim": "#d8dadc",
+                    "surface": "#f7f9fb",
+                    "secondary-container": "#dae2fd",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#7c2e00",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c1c6d7",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#0058bc",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#adc6ff",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3f465c",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-surface-variant": "#414755",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#dae2fd",
+                    "tertiary-fixed-dim": "#ffb595",
+                    "inverse-surface": "#2d3133"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "stack-sm": "12px",
+                    "stack-lg": "48px",
+                    "gutter": "24px",
+                    "margin": "32px",
+                    "stack-md": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "heading": ["Space Grotesk", "sans-serif"],
+                    "body": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h3": ["20px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        @keyframes road-movement {
+            0% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        .animated-road {
+            background: linear-gradient(0deg, #191c1e 0%, #191c1e 10%, transparent 10%, transparent 90%, #191c1e 90%, #191c1e 100%),
+                        repeating-linear-gradient(0deg, #ffffff 0, #ffffff 40px, transparent 40px, transparent 80px);
+            background-size: 100% 160px;
+            animation: road-movement 4s linear infinite;
+        }
+        @keyframes car-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        @keyframes shadow-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.15; }
+        }
+        .car-bounce {
+            animation: car-bob 4s ease-in-out infinite;
+        }
+        .shadow-animation {
+            animation: shadow-pulse 4s ease-in-out infinite;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s ease-in-out infinite;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Fake Notification Styles */
+        #fake-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 1000;
+            transform: translateX(-120%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        #fake-toast.show {
+            transform: translateX(0);
+        }
+        .toast-content {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 250px;
+        }
+        .toast-icon {
+            width: 40px;
+            height: 40px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="antialiased font-body">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-4 h-16 md:h-20">
+<div class="text-xl md:text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-400 font-heading">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined hidden sm:block">directions_car</span>
+<span class="block md:hidden">Limo Green</span>
+<span class="hidden md:block">Limo Green Hà Nội - Nam Định</span>
+</span>
+</div>
+            <nav class="hidden md:flex gap-8 items-center font-heading">
+                <a class="nav-link text-sm font-semibold tracking-tight text-blue-600" href="#trang-chu">Trang chủ</a>
+                <a class="nav-link text-sm font-medium tracking-tight text-gray-600 hover:text-blue-500 transition-colors" href="#dich-vu">Dịch vụ</a>
+                <a class="nav-link text-sm font-medium tracking-tight text-gray-600 hover:text-blue-500 transition-colors" href="javascript:void(0)" onclick="openPolicyModal()">Chính sách</a>
+            </nav>
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="tel:+84986813118" class="hidden lg:flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-700 rounded-lg text-sm font-bold border border-gray-100 hover:bg-gray-100 transition-all">
+                    <span class="material-symbols-outlined text-sm">call</span>
+                    098 681 31 18
+                </a>
+                <button onclick="scrollToElement('dat-lich')" class="px-4 py-2 md:px-5 md:py-2.5 bg-blue-600 text-white font-heading text-sm font-semibold rounded-lg hover:bg-blue-700 transition-all tracking-tight">Đặt ngay</button>
+                <!-- Mobile Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <span id="menu-icon" class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 shadow-xl animate-in slide-in-from-top duration-300">
+            <div class="flex flex-col p-6 gap-4">
+                <a class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-2" href="#trang-chu" onclick="toggleMobileMenu()">Trang chủ</a>
+                <a class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-2" href="#dich-vu" onclick="toggleMobileMenu()">Dịch vụ</a>
+                <a class="text-lg font-bold text-gray-900 border-b border-gray-50 pb-2" href="#dat-lich" onclick="toggleMobileMenu()">Đặt lịch ngay</a>
+                <a class="text-lg font-bold text-blue-600 flex items-center gap-2" href="tel:+84986813118">
+                    <span class="material-symbols-outlined">call</span>
+                    Gọi ngay: 098 681 31 18
+                </a>
+            </div>
+        </div>
+    </header>
+<main class="pt-16 md:pt-20">
+<!-- Hero Section -->
+<section id="trang-chu" class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-20">
+<div class="grid lg:grid-cols-12 gap-8 md:gap-12 items-center">
+<!-- Content Area -->
+<div class="lg:col-span-7 space-y-6 md:space-y-8 text-center md:text-left">
+<div class="space-y-4">
+<span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-full font-heading text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold">Dịch Vụ Vận Tải Cao Cấp</span>
+<h1 class="font-heading text-3xl md:text-5xl lg:text-6xl text-on-surface leading-[1.1] font-bold">
+                        Limo Green - Trải Nghiệm <br class="hidden md:block"/>
+<span class="text-primary">Xe Sang, Giá Ghép</span>
+</h1>
+<p class="text-secondary max-w-2xl mx-auto md:mx-0 text-base md:text-lg leading-relaxed font-normal">
+                        Kết nối hành trình sang trọng với chi phí tối ưu. Đội ngũ tài xế chuyên nghiệp, dòng xe đời mới cam kết mang lại sự an toàn tuyệt đối trên mọi nẻo đường.
+                    </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
+<button onclick="document.getElementById('dat-lich').scrollIntoView({behavior: 'smooth'})" class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-primary text-on-primary rounded-xl font-heading text-lg font-bold shadow-xl shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all tracking-tight">
+<span class="material-symbols-outlined">calendar_today</span>
+                        Đặt xe ngay
+                    </button>
+<div class="flex items-center gap-3 px-4 py-3 bg-white/80 backdrop-blur-sm border border-primary/20 rounded-xl shadow-sm animate-bounce-slow">
+<div class="w-10 h-10 flex-shrink-0 bg-primary/10 text-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 24px;">redeem</span>
+</div>
+<p class="text-xs md:text-sm text-on-surface font-semibold leading-tight text-left max-w-[180px]">
+                            Đặt lịch trước - Thanh toán sau khi hoàn thành chuyến đi
+                        </p>
+</div>
+</div>
+<!-- Info Card -->
+<div class="p-5 md:p-6 bg-white border border-outline-variant/40 rounded-2xl flex items-start gap-4 md:gap-5 shadow-sm max-w-2xl text-left">
+<div class="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-primary/10 text-primary rounded-lg md:rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 24px;">verified_user</span>
+</div>
+<div>
+<h4 class="font-heading text-base md:text-xl font-bold text-on-surface mb-1 tracking-tight">Chuyên tuyến Hà Nội - Nam Định</h4>
+<p class="text-sm md:text-base text-on-surface-variant leading-relaxed font-normal">
+                            Chúng tôi tự hào sử dụng dòng xe <span class="font-semibold text-primary">Limo Green</span> cao cấp, mang lại sự êm ái và đẳng cấp vượt trội cho hành trình của bạn.
+                        </p>
+</div>
+</div>
+</div>
+            <!-- Visual Area -->
+            <div class="lg:col-span-5 relative group flex items-center justify-center lg:justify-end">
+                <div class="relative w-full lg:scale-125 transition-transform duration-700">
+                    <img 
+                        alt="VinFast SUV màu đen sang trọng" 
+                        class="w-full h-auto object-contain car-bounce relative z-10" 
+                        src="https://lh3.googleusercontent.com/aida/ADBb0uhV2YEZVmzM-roxPbomtgcR_qmrhjn6MK5lch5CGshMy8Y4XLzP4osm-D9_0JhMxSfiLwprr8Fdkw8zbHsi8Uhw3MhqmsDfVgTzn9_zAvtO9XOEF8LngB63UNNw0trSGJiwuH_oM0op9U_NbEntoApYtPzs_uLgnNUoawwtDS2nl9scLezHgoJmsCPmKEVwqXrsF49uMaRVJvHcUGCz_DQWFKKGD7YN-Wb1oNBLOQs_dE09YboJFC0TmMkyWECnqlqHa7NdSOR4wjs"
+                    />
+                    <!-- Shadow under car -->
+                    <div class="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-4/5 h-8 bg-black/10 blur-3xl rounded-[100%] z-0"></div>
+                </div>
+            </div>
+</div>
+</section>
+    <!-- Interior Showcase Section -->
+    <section id="dich-vu" class="bg-blue-50/50 py-16 md:py-24 border-y border-blue-100/50">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+        <div class="text-center mb-12 md:mb-20">
+            <p class="text-primary font-bold tracking-widest uppercase text-[10px] mb-4">Khám phá khoang xe</p>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">Không Gian Nội Thất Sang Trọng</h2>
+            <div class="w-20 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+            <!-- Item 1 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/40 border border-gray-100 group">
+                <div class="h-64 overflow-hidden">
+                    <img src="https://lh3.googleusercontent.com/aida/ADBb0uibKxojVjsZtojPT9JYYec5yYpUvyixDa2Y0qTni2PUPmdOsnJFQnaoV7XbbKhgK3YFVgWk3BBXXkIDYqcZxLyoWRrOUSowDyIp7s4FebTQeBYAVjtcrHJMfWi5olCpPVCj0uiLZi7M5KUDZ9DPXs4ccYWwQ-cYr2ua0OfGJjZ45pePWzvxlPuOkL0j2ZAL1GdzytpdOwcF_d92WfhggNiznvcf83i3w4KBxezgVx5Wty5tQX-MXASZ8rLaOAC9tl93a61QzmM90dM" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Khoang lái">
+                </div>
+                <div class="p-6 md:p-8 bg-white border-t border-gray-50 text-center">
+                    <h3 class="text-gray-900 font-bold font-heading text-lg mb-2">Khoang Lái Hiện Đại</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Hệ thống điều khiển trung tâm tinh tế, sang trọng.</p>
+                </div>
+            </div>
+            <!-- Item 2 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/40 border border-gray-100 group">
+                <div class="h-64 overflow-hidden">
+                    <img src="https://lh3.googleusercontent.com/aida/ADBb0uiJiw1wWQXLwv0CD_rZjKcJWyydNpreaDBwuKwJzfL2q5r4uH3oG4Qctiox2pGFEH6FPQIz2BXDzc9XIGI1wHi3-kVSZT2NlMDN04CCbHQ5Vg_TrXVeHP4CS0B0855a2IANfXznorB6feHXVUDDSQzkEc5K8GTVpX_DgJSvpvaVoGQmiuVV8-GPatrEHM8NIkAoKJS5R0W7Iek1Bw5HMMMg5Y0AK9fJbOIAR_TnHMA9ytEkSVf7iMiJezlmAFNHEOYKkG9XU9mBd2I" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Entertainment">
+                </div>
+                <div class="p-6 md:p-8 bg-white border-t border-gray-50 text-center">
+                    <h3 class="text-gray-900 font-bold font-heading text-lg mb-2">Giải Trí Thông Minh</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Màn hình LCD tích hợp nhiều tính năng hiện đại.</p>
+                </div>
+            </div>
+            <!-- Item 3 -->
+            <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/40 border border-gray-100 group">
+                <div class="h-64 overflow-hidden">
+                    <img src="https://lh3.googleusercontent.com/aida/ADBb0uhv-e8Ezx9LYLj3ry7SnxB6D5Fraa3cS4qcYb74PWosqV5I1wEvZeFsEesRf9twxlQUFq8ZhC33f4W2pjFQlt-Ma0qvVJdkB0HPIuM6UBN-EI2Y23-lPk27WMBxOIK2lKZIGYLK-ykqPfFV_gZxV7WeH9C3uaYfWRxJaX5-cwKVIaiv3mR-SG1U_zNyYMJXOFBmltL5IBeTXEdZzU6fYuIDOi-XWb-Itk3O4KmSd_iaYph6VmhK5OGTqXC3_Tm4_l5KbwSc1WlDfno" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Seats">
+                </div>
+                <div class="p-6 md:p-8 bg-white border-t border-gray-100 text-center">
+                    <h3 class="text-gray-900 font-bold font-heading text-lg mb-2">Hàng Ghế Rộng Rãi</h3>
+                    <p class="text-gray-500 text-xs leading-relaxed">Không gian tối thượng cho từng hành khách.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Section -->
+    <section class="bg-blue-50/50 py-20 md:py-32 border-b border-blue-100/50">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 md:mb-24">
+                <p class="text-primary font-bold tracking-widest uppercase text-[10px] mb-4">Dịch vụ tận tâm</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">Dịch Vụ Tận Tâm <br/> Trên Mọi Chuyến Đi</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                <!-- Card 1 -->
+                <div class="bg-white border border-gray-100 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-8 shadow-inner bg-gray-100">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaNKytXxiZMC1TppkysrnXtILjAR63ljQHxcB1EiAeartlw49VkmvMm-iE-3oKU5Qm6cAa3SkNv9ZBLlvt567BPnV9KbhHLO73fDRO5GiKQn0CFfE4YQrwvBYR3yII6cZpfOQITLDTjYgN-UeiJYQzfF-8csWgTUKyvul0pfxi1-rwJkIMvehwbQjXzOvNHsdV1tdJZ1zRIA2aeMA5WfbUeixIRjE0KPGnMjz71EUgS5ALp3rWCCuJPGYLgYSC9rkRSCRQHE4giUBk" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Khăn ướt nước suối">
+                    </div>
+                    <div class="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center -mt-16 ml-4 relative z-10 shadow-lg shadow-primary/30 border-4 border-white">
+                        <span class="material-symbols-outlined text-3xl">local_drink</span>
+                    </div>
+                    <h3 class="text-gray-900 text-xl font-bold mt-6 mb-4">Khăn Ướt & Nước Suối Miễn Phí</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Thưởng thức nước suối tinh khiết đóng chai và khăn nén cao cấp trong không gian xe sang trọng, mang lại sự sảng khoái tối đa.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white border border-gray-100 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group lg:translate-y-12">
+                    <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-8 shadow-inner bg-gray-100">
+                        <img src="https://lh3.googleusercontent.com/aida/ADBb0uhPP10g1Hc6LAJFQY6lYOn4C5g5v3_VirceocxwQXR-foFJB_jAOuzDHKomhkGoVlytx8PBS9J5bvnG3d_9fEZQj3rhQnTPkOTPacPOYq0_NJZeJ7H52tWvzbgS-Wf7WIPE41loLJe47MaGp91uAxgS_G-MHseBkIeBiyCFh5OmDA0_Oa6lIiS6hgIOgOj7zQ-p2ugouAIo--5Tpyrvn3YcLRElPmp1kLeRM_CeGSbmqKDbrpXi2nFCig-R" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Không gian thư giãn">
+                    </div>
+                    <div class="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center -mt-16 ml-4 relative z-10 shadow-lg shadow-primary/30 border-4 border-white">
+                        <span class="material-symbols-outlined text-3xl">airline_seat_recline_extra</span>
+                    </div>
+                    <h3 class="text-gray-900 text-xl font-bold mt-6 mb-4">Không Gian Sạch Sẽ, Thư Giãn</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Tận hưởng sự thoải mái tuyệt đối trong khoang hành khách rộng rãi với ghế da cao cấp, mang lại cảm giác thư giãn như ở nhà.</p>
+                </div>
+                <!-- Card 2 (Card 3 in the code but renamed for consistency) -->
+                <div class="bg-white border border-gray-100 p-8 rounded-[2.5rem] shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-8 shadow-inner bg-gray-100">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBP2W43T6wpSLLTrEJp72Chte5EN436IFfcYBv0W0x10XbzVZV_6cPEyLYjGm7W--ZQLruMtHmMoqlYqiPGJtAevRFHKM8jt090bmKN3n59_dkPAyX7iDLNVjNEu5vE_HgMx7PZeo82PBMJwlJw0204GbUn8u3Je6R-nshfzut6FsaSNPz8b02cjffy8xANKWkUc6imVPFw_ziLXmfCha6G-qK5LdR5tmTqzBphCj9UtFNQWfxUBeXtmPFB1jpL5qknCWUYxUz4v2H4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Tài xế thân thiện">
+                    </div>
+                    <div class="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center -mt-16 ml-4 relative z-10 shadow-lg shadow-primary/30 border-4 border-white">
+                        <span class="material-symbols-outlined text-3xl">person_pin_circle</span>
+                    </div>
+                    <h3 class="text-gray-900 text-xl font-bold mt-6 mb-4">Tài Xế Thân Thiện, Nhiệt Tình</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Đội ngũ bác tài chuyên nghiệp, am hiểu cung đường và luôn giữ thái độ niềm nở, lịch sự trong suốt hành trình.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Comparison Services Section -->
+<section class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24">
+<div class="text-center mb-10 md:mb-16">
+<h2 class="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-on-surface mb-3 md:mb-4 tracking-tight">Lựa Chọn Hành Trình Phù Hợp</h2>
+<p class="text-sm md:text-base text-secondary font-medium">Khám phá hai phong cách di chuyển tối ưu dành riêng cho bạn.</p>
+<div class="w-16 md:w-20 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+<!-- Xe Ghép -->
+<div class="relative p-6 md:p-10 bg-white border border-outline-variant/50 rounded-[2rem] md:rounded-[2.5rem] shadow-sm">
+<div class="absolute top-6 right-6">
+<span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full font-heading text-[10px] tracking-[0.1em] uppercase font-bold">Tiết kiệm</span>
+</div>
+<div class="w-16 h-16 bg-blue-50 text-primary rounded-2xl flex items-center justify-center mb-6 md:mb-8">
+<span class="material-symbols-outlined" style="font-size: 32px;">groups</span>
+</div>
+<h3 class="font-heading text-xl md:text-2xl font-bold text-on-surface mb-3 tracking-tight">Xe Ghép Tiết Kiệm</h3>
+<p class="text-sm md:text-base text-secondary mb-6 md:mb-8 leading-relaxed font-normal">
+                    Giải pháp di chuyển <strong class="font-semibold text-on-surface">thông minh</strong> bằng cách chia sẻ hành trình. Tiết kiệm chi phí nhưng vẫn đảm bảo sự tiện nghi.
+                </p>
+<div class="space-y-4 md:space-y-6">
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-green-500 text-lg">payments</span></div>
+<div>
+<h4 class="font-heading text-sm md:text-base font-bold text-on-surface tracking-tight">Tối ưu chi phí</h4>
+<p class="text-xs md:text-sm text-on-surface-variant font-medium">Tiết kiệm đến 50% ngân sách.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-blue-500 text-lg">map</span></div>
+<div>
+<h4 class="font-heading text-sm md:text-base font-bold text-on-surface tracking-tight">Đón trả linh hoạt</h4>
+<p class="text-xs md:text-sm text-on-surface-variant font-medium">Phục vụ tận nơi theo yêu cầu hành khách.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Thuê Xe Riêng -->
+<div class="relative p-6 md:p-10 bg-white border border-outline-variant/50 rounded-[2rem] md:rounded-[2.5rem] shadow-sm">
+<div class="absolute top-6 right-6">
+<span class="px-3 py-1 bg-gray-900 text-white rounded-full font-heading text-[10px] tracking-[0.1em] uppercase font-bold">Cao cấp</span>
+</div>
+<div class="w-16 h-16 bg-gray-900 text-white rounded-2xl flex items-center justify-center mb-6 md:mb-8">
+<span class="material-symbols-outlined" style="font-size: 32px;">workspace_premium</span>
+</div>
+<h3 class="font-heading text-xl md:text-2xl font-bold text-on-surface mb-3 tracking-tight">Thuê Xe Riêng Sang Trọng</h3>
+<p class="text-sm md:text-base text-secondary mb-6 md:mb-8 leading-relaxed font-normal">
+                    Định nghĩa lại sự <strong class="font-semibold text-on-surface">sang trọng và riêng tư</strong>. Không gian hoàn toàn thuộc về bạn và người thân.
+                </p>
+<div class="space-y-4 md:space-y-6">
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-blue-900 text-lg">no_meeting_room</span></div>
+<div>
+<h4 class="font-heading text-sm md:text-base font-bold text-on-surface tracking-tight">Riêng tư tuyệt đối</h4>
+<p class="text-xs md:text-sm text-on-surface-variant font-medium">Không gian hoàn toàn thuộc về bạn.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-blue-900 text-lg">update</span></div>
+<div>
+<h4 class="font-heading text-sm md:text-base font-bold text-on-surface tracking-tight">Làm chủ thời gian</h4>
+<p class="text-xs md:text-sm text-on-surface-variant font-medium">Quyết định giờ khởi hành linh hoạt.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+    <!-- Booking Form Section -->
+    <section id="dat-lich" class="max-w-7xl mx-auto px-4 md:px-6 mb-12 md:mb-24 scroll-mt-24">
+        <div class="relative">
+            <!-- Decorative Background Element -->
+            <div class="absolute -inset-4 bg-gradient-to-tr from-primary/10 via-transparent to-primary/5 rounded-[3rem] blur-2xl -z-10"></div>
+            
+            <div class="bg-white dark:bg-gray-900 rounded-[2.5rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-primary/10 relative overflow-hidden">
+                <!-- Branding Accent -->
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-blue-400 to-primary"></div>
+                
+                <div class="mb-10 md:mb-12">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full mb-4">
+                        <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider">Nhanh chóng & Tiết kiệm</span>
+                    </div>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-on-surface flex items-center gap-4 tracking-tight">
+                        <span class="w-12 h-12 bg-primary text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-primary/30">
+                            <span class="material-symbols-outlined">alarm_on</span>
+                        </span>
+                        Đặt Lịch Và Nhận Mã Giảm Giá
+                    </h2>
+                    <p class="text-base md:text-lg text-secondary mt-3 font-medium max-w-2xl">Vui lòng điền thông tin bên dưới, nhân viên Limo Green sẽ liên hệ lại ngay trong vòng 5 phút.</p>
+                </div>
+                                                                                                <form id="booking-form" action="https://script.google.com/macros/s/AKfycbyoevc3KMG4iJoWBLVRLsXIsCsxyuDWxFpyzCanfscoddFODEqpHxRGJ4R8jm5UnO4Z0g/exec" method="POST" target="hidden_iframe" class="space-y-6 md:space-y-8">
+                                                                                                    <input type="hidden" name="discount_code" id="hidden-discount-code">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+<!-- Pick up -->
+<div class="space-y-2">
+<label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Điểm đón</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">my_location</span>
+<input id="pickup-point" name="pickup" required class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium" placeholder="Hà Nội..." type="text"/>
+</div>
+</div>
+<!-- Drop off -->
+<div class="space-y-2">
+<label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Điểm đến</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">pin_drop</span>
+<input id="dropoff-point" name="dropoff" required class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium" placeholder="Nam Định..." type="text"/>
+</div>
+</div>
+<!-- Date -->
+<div class="space-y-2">
+<label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Ngày đi</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">event</span>
+<input id="travel-date" name="date" required class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium" type="date"/>
+</div>
+</div>
+<!-- Car Type -->
+<div class="space-y-2">
+<label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Loại xe</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">minor_crash</span>
+<select id="car-type" name="car_type" class="w-full pl-10 pr-10 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium appearance-none">
+<option value="Xe ghép (Tiết kiệm)">Xe ghép (Tiết kiệm)</option>
+<option value="Bao xe (Riêng tư)">Bao xe (Riêng tư)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Note -->
+<div class="space-y-2">
+<label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Ghi chú <span class="lowercase font-normal text-xs text-gray-500">(giờ đi, địa chỉ cụ thể)</span></label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-outline text-xl">notes</span>
+<textarea id="note" name="note" class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium min-h-[80px]" placeholder="Nhập ghi chú của bạn..."></textarea>
+</div>
+</div>
+                    <!-- Contact Section -->
+                    <div class="w-full md:grid md:grid-cols-2 gap-4 space-y-4 md:space-y-0 mb-8">
+                        <!-- Customer Name -->
+                        <div class="space-y-2">
+                            <label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Họ và tên khách hàng</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">person</span>
+                                <input id="customer-name" name="name" required class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium" placeholder="Nguyễn Văn A" type="text"/>
+                            </div>
+                        </div>
+                        <!-- Phone -->
+                        <div class="space-y-2">
+                            <label class="font-heading text-[10px] tracking-[0.15em] text-secondary uppercase font-bold px-1">Số điện thoại liên hệ</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-xl">call</span>
+                                <input id="phone" name="phone" required class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/50 rounded-xl focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-sm md:text-base font-medium" placeholder="0xxx xxx xxx" type="tel"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button Row -->
+                    <div class="flex justify-center md:justify-end">
+                        <button id="submit-btn" class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-heading text-lg font-bold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-3 group tracking-tight" type="submit">
+                            <span id="btn-text">Đặt lịch nhận báo giá</span>
+                            <span id="btn-spinner" class="material-symbols-outlined animate-spin hidden">sync</span>
+                            <span id="btn-arrow" class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </button>
+                    </div>
+                </form>
+                <!-- Iframe ẩn để nhận kết quả trả về mà không load lại trang -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof submitted !== 'undefined' && submitted) { handleSuccess(); }"></iframe>
+            </div>
+        </div>
+    </section>
+    <!-- Booking Process Section -->
+    <section class="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-24 bg-gray-50/50 md:rounded-[3rem] border border-outline-variant/20 mb-12 md:mb-24">
+        <div class="text-center mb-12 md:mb-16">
+            <h2 class="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-on-surface mb-4 tracking-tight">Quy Trình Đặt Xe Đơn Giản</h2>
+            <p class="text-sm md:text-base text-secondary font-medium">Trải nghiệm dịch vụ chuyên nghiệp chỉ với vài bước nhỏ.</p>
+            <div class="w-16 md:w-20 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
+        </div>
+        
+        <div class="relative">
+            <!-- Connecting Line (Desktop) -->
+            <div class="hidden lg:block absolute top-[44px] left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 md:gap-12 relative">
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">edit_calendar</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">1. Đặt lịch</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Điền thông tin và yêu cầu của bạn qua form.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">phone_forwarded</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">2. Xác nhận</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Chúng tôi liên hệ xác nhận chuyến đi ngay.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">hail</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">3. Đón khách</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Tài xế đến đón bạn đúng giờ, tại điểm hẹn.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">airline_seat_recline_extra</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">4. Trải nghiệm</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Tận hưởng hành trình sang trọng, êm ái.</p>
+                </div>
+                <!-- Step 5 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">location_on</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">5. Trả khách</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Đến nơi an toàn và đúng lịch trình.</p>
+                </div>
+                <!-- Step 6 -->
+                <div class="flex flex-col items-center text-center group">
+                    <div class="w-20 h-20 bg-white border-2 border-primary/10 text-primary rounded-full flex items-center justify-center mb-5 shadow-sm group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-white transition-all duration-300 z-10">
+                        <span class="material-symbols-outlined" style="font-size: 32px;">payments</span>
+                    </div>
+                    <h4 class="font-heading text-sm md:text-base font-bold text-on-surface mb-2">6. Thanh toán</h4>
+                    <p class="text-xs text-secondary leading-relaxed px-2">Thanh toán linh hoạt sau khi xong chuyến.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Footer -->
+<footer id="footer" class="w-full border-t border-gray-100 bg-white">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-6 py-10 gap-6 text-center md:text-left">
+<div class="text-lg font-bold text-gray-900 font-heading tracking-tight">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined">directions_car</span>
+                Limo Green Hà Nội - Nam Định
+            </span>
+</div>
+<div class="flex flex-col items-center md:items-end gap-1">
+<a href="tel:+84986813118" class="text-primary font-bold text-lg md:text-xl font-heading">098 681 31 18</a>
+<p class="font-heading text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">
+            © 2024 Limo Green. Toàn bộ bản quyền được bảo lưu.
+        </p>
+</div>
+</div>
+    </footer>
+    <!-- Fake Booking Toast -->
+    <div id="fake-toast">
+        <div class="toast-content">
+            <div class="toast-icon">
+                <span class="material-symbols-outlined">directions_car</span>
+            </div>
+            <div class="text-left">
+                <p id="toast-name" class="text-xs font-bold text-gray-900 mb-0.5">Nguyễn Văn A</p>
+                <p class="text-[10px] text-gray-500 font-medium">Vừa đặt thành công <span class="text-primary font-bold">1 vé xe ghép</span></p>
+                <p class="text-[9px] text-gray-400 mt-0.5">Cách đây 2 phút</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Modal -->
+    <div id="policy-modal" class="fixed inset-0 z-[101] flex items-center justify-center p-3 md:p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-900 w-full max-w-2xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col">
+            <!-- Header -->
+            <div class="p-6 md:p-8 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-gray-50/50">
+                <h2 class="font-heading text-xl md:text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary">policy</span>
+                    Chính Sách Dịch Vụ
+                </h2>
+                <button onclick="closePolicyModal()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-white rounded-xl transition-all">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <!-- Content -->
+            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar space-y-8">
+                <!-- Policy 1 -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                        1. Chính sách đặt chuyến
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-6">
+                        Khách hàng có thể đặt xe trực tuyến qua website hoặc gọi hotline 24/7. Chúng tôi khuyến khích đặt trước ít nhất 30 phút để đảm bảo sẵn sàng phương tiện tốt nhất.
+                    </p>
+                </div>
+                <!-- Policy 2 -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">cancel</span>
+                        2. Chính sách hủy chuyến
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-6">
+                        Việc hủy chuyến miễn phí nếu thực hiện trước 1 giờ. Nếu hủy sát giờ đón, vui lòng báo sớm để chúng tôi sắp xếp lại lịch trình cho tài xế.
+                    </p>
+                </div>
+                <!-- Policy 3 -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">verified_user</span>
+                        3. Quyền lợi khách hàng
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-6">
+                        Khách hàng được phục vụ bởi tài xế chuyên nghiệp, xe đời mới sạch sẽ. Toàn bộ chuyến đi đều được bảo hiểm hành khách theo quy định của pháp luật.
+                    </p>
+                </div>
+                <!-- Policy 4 -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-primary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">security</span>
+                        4. Bảo mật thông tin
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-6">
+                        Mọi thông tin cá nhân khách hàng cung cấp qua website chỉ được dùng cho mục đích liên hệ đón trả khách và không chia sẻ cho bên thứ ba.
+                    </p>
+                </div>
+            </div>
+            <!-- Footer -->
+            <div class="p-6 border-t border-gray-100 dark:border-gray-800 text-center">
+                <button onclick="closePolicyModal()" class="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-all">
+                    Đã hiểu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-900 w-full max-w-md max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl transform scale-95 transition-transform duration-300 custom-scrollbar">
+            <div class="relative p-6 md:p-8 text-center">
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 md:top-6 md:right-6 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <!-- Success Icon -->
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                    <span class="material-symbols-outlined" style="font-size: 36px; md:font-size: 48px;">check_circle</span>
+                </div>
+
+                <h2 class="font-heading text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">Đặt lịch thành công!</h2>
+                <p class="text-sm md:text-base text-secondary dark:text-gray-400 mb-6 md:mb-8 px-2 md:px-4 leading-relaxed">Chúc mừng quý khách đã đặt lịch thành công. Đội ngũ tài xế sẽ liên hệ với bạn trong giây lát.</p>
+
+                <!-- Discount Code Box -->
+                <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-2xl p-4 md:p-6 mb-6 md:mb-8 relative group">
+                    <p class="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400 font-bold mb-2">Mã giảm giá 10% của bạn</p>
+                    <div class="flex items-center justify-center gap-3">
+                        <span id="discount-code" class="font-heading text-2xl md:text-3xl font-bold text-primary tracking-widest uppercase">LIMO10XXXX</span>
+                        <button onclick="copyDiscountCode()" class="p-2 hover:bg-blue-100 dark:hover:bg-blue-800 rounded-lg transition-colors group/copy" title="Copy mã">
+                            <span id="copy-icon" class="material-symbols-outlined text-blue-600 dark:text-blue-400">content_copy</span>
+                        </button>
+                    </div>
+                    <div id="copy-toast" class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[10px] px-3 py-1 rounded-full opacity-0 translate-y-2 transition-all pointer-events-none">Đã copy!</div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="space-y-3 md:space-y-4 text-left bg-gray-50 dark:bg-gray-800/50 p-4 md:p-5 rounded-2xl border border-gray-100 dark:border-gray-700">
+                    <p class="text-[10px] md:text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1 md:mb-2 text-center md:text-left">Hướng dẫn nhận ưu đãi:</p>
+                    <div class="flex gap-3">
+                        <span class="w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary text-white text-[10px] flex items-center justify-center shrink-0 font-bold">1</span>
+                        <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 font-medium">Copy mã giảm giá ở trên.</p>
+                    </div>
+                    <a href="https://zalo.me/g/wtnrth810" target="_blank" class="w-full py-4 bg-[#0068ff] text-white font-heading font-bold rounded-xl hover:bg-[#0052cc] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
+                        <span class="material-symbols-outlined">groups</span>
+                        Vào Nhóm Zalo Nhận Giảm Giá
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61585431722588" target="_blank" class="w-full py-4 bg-[#1877f2] text-white font-heading font-bold rounded-xl hover:bg-[#0e5a9e] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
+                        <span class="material-symbols-outlined">forum</span>
+                        Vào Nhóm Facebook Nhận Giảm Giá
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPolicyModal() {
+            const modal = document.getElementById('policy-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closePolicyModal() {
+            const modal = document.getElementById('policy-modal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.innerText = 'close';
+            } else {
+                menu.classList.add('hidden');
+                icon.innerText = 'menu';
+            }
+        }
+
+        function scrollToElement(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const headerOffset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Intercept all anchor clicks for smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const id = href.substring(1);
+                    if (id === 'trang-chu' || id === '') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        scrollToElement(id);
+                    }
+                }
+            });
+        });
+
+        let submitted = false;
+        const form = document.getElementById('booking-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const btnArrow = document.getElementById('btn-arrow');
+        const modal = document.getElementById('success-modal');
+        const codeElement = document.getElementById('discount-code');
+        const hiddenCodeInput = document.getElementById('hidden-discount-code');
+
+        form.addEventListener('submit', () => {
+            submitted = true;
+            
+            // Tạo mã giảm giá ngay khi gửi form để lưu vào sheet
+            const newCode = generateRandomCode();
+            hiddenCodeInput.value = newCode;
+            codeElement.innerText = newCode; // Lưu sẵn để hiển thị vào modal sau
+
+            submitBtn.disabled = true;
+            btnText.innerText = 'Đang gửi...';
+            btnSpinner.classList.remove('hidden');
+            btnArrow.classList.add('hidden');
+        });
+
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = 'LG10-';
+            for (let i = 0; i < 4; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function handleSuccess() {
+            // Hiển thị modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modal.firstElementChild.classList.remove('scale-95');
+                modal.firstElementChild.classList.add('scale-100');
+            }, 10);
+
+            form.reset();
+            submitBtn.disabled = false;
+            btnText.innerText = 'Đặt lịch nhận báo giá';
+            btnSpinner.classList.add('hidden');
+            btnArrow.classList.remove('hidden');
+            submitted = false;
+        }
+
+        function closeModal() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modal.firstElementChild.classList.remove('scale-100');
+            modal.firstElementChild.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Fake Booking Notifications System
+        const fakeNames = [
+            "Nguyễn Hoàng Nam", "Trần Thị Tuyết", "Lê Minh Tuấn", "Phạm Văn Đức", 
+            "Vũ Hoàng Anh", "Đặng Minh Tâm", "Hoàng Thu Thảo", "Bùi Quốc Huy",
+            "Ngô Thùy Linh", "Đỗ Văn Hùng", "Nguyễn Minh Quang", "Trần Đức Lợi",
+            "Lê Thị Mai", "Phạm Đình Trọng", "Nguyễn Bảo Ngọc", "Trần Xuân Trường",
+            "Phan Thanh Bình", "Lý Gia Hân", "Trương Công Định", "Đoàn Minh Nhật"
+        ];
+        const fakePhonePrefix = ["098", "097", "096", "091", "090", "038", "039", "035"];
+        const fakeActions = ["1 vé xe ghép", "1 chuyến xe ghép", "Bao xe đi tỉnh", "1 vé Nam Định - HN", "1 vé HN - Nam Định"];
+
+        function showFakeNotification() {
+            const toast = document.getElementById('fake-toast');
+            const nameEl = document.getElementById('toast-name');
+            
+            // Random data
+            const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+            const prefix = fakePhonePrefix[Math.floor(Math.random() * fakePhonePrefix.length)];
+            const mid = Math.floor(Math.random() * 900000 + 100000).toString().substring(0, 4);
+            const action = fakeActions[Math.floor(Math.random() * fakeActions.length)];
+            
+            nameEl.innerHTML = `${name} - ${prefix}${mid}xxx`;
+            toast.querySelector('.text-primary').innerText = action;
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Hide after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+            
+            // Next notification after 6-12 seconds
+            setTimeout(showFakeNotification, Math.random() * 6000 + 8000);
+        }
+
+        // Start after 5 seconds
+        setTimeout(showFakeNotification, 5000);
+
+        async function copyDiscountCode() {
+            const code = codeElement.innerText;
+            const toast = document.getElementById('copy-toast');
+            const icon = document.getElementById('copy-icon');
+
+            try {
+                await navigator.clipboard.writeText(code);
+                icon.innerText = 'check';
+                toast.classList.remove('opacity-0', 'translate-y-2');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                
+                setTimeout(() => {
+                    icon.innerText = 'content_copy';
+                    toast.classList.add('opacity-0', 'translate-y-2');
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        }
+    </script>
+</body></html>
